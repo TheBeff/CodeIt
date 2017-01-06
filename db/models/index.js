@@ -17,7 +17,7 @@ User.hasMany(Reactions)
 Reactions.belongsTo(Ideas)
 Reactions.belongsTo(User)
 
-Tags.belongsTo(Ideas)
+Tags.belongsToMany(Ideas, { through: "TagsIdeas"} )
 
 Ideas.hasMany(Tags)
 Ideas.belongsTo(User)
