@@ -4,6 +4,7 @@ const epilogue = require('../epilogue')
 const db = require('APP/db')
 const Ideas = db.model('ideas')
 const Users = db.model('users')
+const Comments = db.model('comments')
 
 const customIdeasRoutes = require('express').Router()
 
@@ -17,8 +18,11 @@ const ideas = epilogue.resource({
   model: Ideas,
   endpoints: ['/ideas', '/ideas/:id'],
   include: [{
-    model: Users
-  }]
+    model: Users},{
+
+    model: Comments
+    }
+  ]
 })
 
 // const {mustBeLoggedIn, selfOnly, forbidden} = epilogue.filters
