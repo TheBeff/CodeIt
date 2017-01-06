@@ -5,8 +5,8 @@
 // to get access to the User model.
 
 const Ideas = require('./idea')
-const Comments = require('./comment')
 const User = require('./user')
+const Comments = require('./comment')
 const Reactions = require('./reaction')
 const Tags = require('./tag')
 
