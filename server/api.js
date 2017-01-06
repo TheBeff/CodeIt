@@ -3,6 +3,12 @@
 const db = require('APP/db')
 const api = module.exports = require('express').Router()
 
+api.use('/users', require('./routes/users'))
+api.use('/tags', require('./routes/users'))
+api.use('/comments', require('./routes/users'))
+api.use('/reactions', require('./routes/users'))
+api.use('/ideas', require('./routes/users'))
+
 api
   .get('/heartbeat', (req, res) => res.send({ok: true,}))
   .use('/auth', require('./auth'))
