@@ -11,6 +11,9 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import AddPost from './components/addPost'
+import IdeaBar from './components/ideaBar'
+import Navbar from './components/navbar'
+import IdeaList from './components/idealist'
 
 injectTapEventPlugin();
 
@@ -19,9 +22,7 @@ const ExampleApp = connect(
 ) (
   ({ user, children }) =>
     <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav> 
+    <Navbar user={user}/> 
       {children}
     </div>
 )
@@ -34,6 +35,8 @@ render (
           <IndexRedirect to="/jokes" />
           <Route path="/jokes" component={Jokes} />
           <Route path="/addPost" component={AddPost} />
+          <Route path="/ideaBar" component={IdeaBar} />
+          <Route path="/ideaList" component={IdeaList} />
         </Route>
       </Router>
     </Provider>
