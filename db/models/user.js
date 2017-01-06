@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
-const Comments = db.model('comments')
+const Comments = require('./comment')
 
 const User = db.define('users', {
   name: Sequelize.STRING,
