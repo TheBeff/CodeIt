@@ -32,8 +32,7 @@ render (
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={ExampleApp}>
-          <IndexRedirect to="/jokes" />
-          <Route path="/jokes" component={Jokes} />
+          <IndexRedirect to="/ideaList" />
           <Route path="/addPost" component={AddPost} />
           <Route path="/ideaBar" component={IdeaBar} />
           <Route path="/ideaList" component={IdeaList} />

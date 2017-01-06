@@ -21,22 +21,37 @@ export default class IdeaBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // make it so smiles and stuff toggle and not just add forever...
+      checks: this.props.idea.checks,
+      smiles: this.props.idea.happyfaces,
+      frowns: this.props.idea.sadfaces,
       dogs: 5
     }
+  }
+
+  addSmile = () => {
+    let smiles = this.state.smiles + 1;
+    this.setState({smiles: smiles})
+  }
+
+  addCheck = () => {
+    let checks = this.state.checks + 1;
+    this.setState({checks: checks})
+  }
+
+  addFrown = () => {
+    let frowns = this.state.frowns + 1;
+    this.setState({frowns: frowns})
+
+  }
+
+  componentWillUnmount() {
+     // something something update database with smiles....
   }
 
   render() {
 
     const idea = this.props.idea;
-    //     const idea = {
-    //   author: 'Arthur',
-    //   name: 'Aardvaark After Dark',
-    //   description: 'Dating service for aardvark',
-    //   image: 'https://placebear.com/100/100',
-    //   sadfaces: 2,
-    //   happyfaces: 4,
-    //   checks: 10
-    // }
 
      return (<div>
       <Card>
@@ -44,34 +59,36 @@ export default class IdeaBar extends Component {
           title={idea.author}
           subtitle="Author"
           avatar={idea.image}
+          actAsExpander={true}
+          showExpandableButton={true}
         />
         <CardTitle title={idea.name} />
-        <CardText>
+        <CardText expandable={true}>
           {idea.description}
         </CardText>
-        <CardActions>
+        <CardActions expandable={true}>
           <Badge
-            badgeContent={idea.checks}
+            badgeContent={this.state.checks}
             primary={true} 
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="I want to work on this!">
-              <CheckCircleIcon />
+              <CheckCircleIcon onClick={this.addCheck} />
             </IconButton>
           </Badge>
           <Badge
-            badgeContent={idea.happyfaces}
+            badgeContent={this.state.smiles}
             primary={true}
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="This idea is the best!">
-              <MoodIcon />
+              <MoodIcon onClick={this.addSmile} />
             </IconButton>
           </Badge>
           <Badge
-            badgeContent={idea.sadfaces}
+            badgeContent={this.state.frowns}
             primary={true}
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="This idea sucks">
-              <MoodBadIcon />
+              <MoodBadIcon onClick={this.addFrown} />
             </IconButton>
           </Badge>
         </CardActions>
