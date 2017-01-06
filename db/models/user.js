@@ -3,9 +3,10 @@
 const bcrypt = require('bcrypt')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
+const Comments = db.model('comments')
 
 const User = db.define('users', {
-  name: Sequelize.STRING,  
+  name: Sequelize.STRING,
   email: {
     type: Sequelize.STRING,
     validate: {
@@ -23,6 +24,15 @@ const User = db.define('users', {
     beforeCreate: setEmailAndPassword,
     beforeUpdate: setEmailAndPassword,
   },
+  classMethods: {
+    findByIdeas(userId) {
+      return Comments.findAll({
+        where: {
+          user_id: userId
+        }
+      })
+    }
+  },
   instanceMethods: {
     authenticate(plaintext) {
       return new Promise((resolve, reject) =>
@@ -30,7 +40,9 @@ const User = db.define('users', {
           (err, result) =>
             err ? reject(err) : resolve(result))
         )
-    }    
+    },
+
+
   }
 })
 
