@@ -9,11 +9,6 @@ api.use('/comments', require('./routes/comments'))
 api.use('/reactions', require('./routes/reactions'))
 api.use('/ideas', require('./routes/ideas'))
 
-// api
-//   .get('/heartbeat', (req, res) => res.send({ok: true,}))
-//   .use('/auth', require('./auth'))
-//   .use('/users', require('./users'))
-
 // Send along any errors
 api.use((err, req, res, next) => {
   res.status(500).send(err)
