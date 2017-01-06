@@ -4,11 +4,12 @@
 // so any other part of the application could call sequelize.model('User')
 // to get access to the User model.
 
+const Ideas = require('./idea')
+const Comments = require('./comment')
 const User = require('./user')
 const Reactions = require('./reaction')
 const Tags = require('./tag')
-const Ideas = require('./idea')
-const Comments = require('./comment')
+
 
 User.hasMany(Ideas)
 User.hasMany(Comments)
