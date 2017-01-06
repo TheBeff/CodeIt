@@ -14,7 +14,6 @@ import IconButton from 'material-ui/IconButton';
 import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
 import MoodBadIcon from 'material-ui/svg-icons/social/mood-bad';
 import MoodIcon from 'material-ui/svg-icons/social/mood';
-import Comments from './comments';
 
 
 export default class IdeaBar extends Component {
@@ -50,9 +49,10 @@ export default class IdeaBar extends Component {
     console.log('id', id);
     axios.get(`/api/reactions/ideas/${id}`)
       .then((reactions) => {
-        let smiles = reactions.great;
-        let frowns = reactions.meh;
-        let checks = reactions.star;
+        console.log(reactions)
+        let smiles = reactions.data.great;
+        let frowns = reactions.data.meh;
+        let checks = reactions.data.star;
         this.setState({
           smiles: smiles, frowns: frowns, checks: checks
         })
@@ -82,7 +82,7 @@ export default class IdeaBar extends Component {
         </CardText>
         <CardActions expandable={true}>
           <Badge
-            badgeContent={this.state.checks}
+            badgeContent={this.state.checks || 0}
             primary={true} 
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="I want to work on this!">
@@ -90,7 +90,7 @@ export default class IdeaBar extends Component {
             </IconButton>
           </Badge>
           <Badge
-            badgeContent={this.state.smiles}
+            badgeContent={this.state.smiles || 0}
             primary={true}
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="This idea is the best!">
@@ -98,14 +98,13 @@ export default class IdeaBar extends Component {
             </IconButton>
           </Badge>
           <Badge
-            badgeContent={this.state.frowns}
+            badgeContent={this.state.frowns || 0}
             primary={true}
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="This idea sucks">
               <MoodBadIcon onClick={this.addFrown} />
             </IconButton>
           </Badge>
-          <Comments comments={idea.comments} />
         </CardActions>
       </Card>
     </div> )
