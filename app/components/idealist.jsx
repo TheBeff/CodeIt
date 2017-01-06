@@ -2,6 +2,7 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import IdeaBar from './ideaBar'
 import axios from 'axios';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 /**
  * A simple example of `AppBar` with an icon on the right.
@@ -17,9 +18,9 @@ export default class IdeaList extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get('/masgiclroute')
+		axios.get('/api/ideas')
 		.then((ideas) => {
-			this.setState({ideas: ideas});
+			this.setState({ideas: ideas.data});
 		})
 		.catch(() => {
 			console.log('Oh no, no ideas. = (');
@@ -31,7 +32,7 @@ export default class IdeaList extends React.Component {
 
 	render(){
 
-		const idea = {
+		const idea = [{
 			author: 'Arthur',
 			name: 'Aardvaark After Dark',
 			description: 'Dating service for aardvark',
@@ -39,9 +40,17 @@ export default class IdeaList extends React.Component {
 			sadfaces: 2,
 			happyfaces: 4,
 			checks: 10
-		}
+		}]
 
-		return (<IdeaBar idea={idea} cool="wwowowowo" />)
+		const ideas = this.state.ideas || idea
+
+		return (
+			<div>
+				{ideas.map((idea, index) => {
+					return (<IdeaBar idea={idea} key={index} />)
+				})}
+			</div>
+		)
 	}
 
 }

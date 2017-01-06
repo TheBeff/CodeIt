@@ -21,57 +21,88 @@ export default class IdeaBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // make it so smiles and stuff toggle and not just add forever...
+      checks: 0,
+      smiles: 0,
+      frowns: 0,
       dogs: 5
     }
+  }
+
+  addSmile = () => {
+    let smiles = this.state.smiles + 1;
+    this.setState({smiles: smiles})
+  }
+
+  addCheck = () => {
+    let checks = this.state.checks + 1;
+    this.setState({checks: checks})
+  }
+
+  addFrown = () => {
+    let frowns = this.state.frowns + 1;
+    this.setState({frowns: frowns})
+  }
+
+  componentDidMount() {
+    let id = this.props.idea.id || 0;
+    console.log('id', id);
+    axios.get(`/api/reactions/ideas/${id}`)
+      .then((reactions) => {
+        console.log(reactions)
+        let smiles = reactions.data.great;
+        let frowns = reactions.data.meh;
+        let checks = reactions.data.star;
+        this.setState({
+          smiles: smiles, frowns: frowns, checks: checks
+        })
+      })
+  }
+
+  componentWillUnmount() {
+     // something something update database with smiles....
   }
 
   render() {
 
     const idea = this.props.idea;
-    //     const idea = {
-    //   author: 'Arthur',
-    //   name: 'Aardvaark After Dark',
-    //   description: 'Dating service for aardvark',
-    //   image: 'https://placebear.com/100/100',
-    //   sadfaces: 2,
-    //   happyfaces: 4,
-    //   checks: 10
-    // }
 
      return (<div>
       <Card>
         <CardHeader
           title={idea.author}
-          subtitle="Author"
-          avatar={idea.image}
+          subtitle={idea.gitHubLink}
+          avatar={idea.imageUrl}
+          actAsExpander={true}
+          showExpandableButton={true}
         />
-        <CardTitle title={idea.name} />
-        <CardText>
+        <CardTitle title={idea.title} />
+        <CardText expandable={true}>
           {idea.description}
         </CardText>
-        <CardActions>
+        <CardActions expandable={true}>
           <Badge
-            badgeContent={idea.checks}
+            badgeContent={this.state.checks || 0}
             primary={true} 
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="I want to work on this!">
-              <CheckCircleIcon />
+              <CheckCircleIcon onClick={this.addCheck} />
             </IconButton>
           </Badge>
           <Badge
-            badgeContent={idea.happyfaces}
+            badgeContent={this.state.smiles || 0}
             primary={true}
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="This idea is the best!">
-              <MoodIcon />
+              <MoodIcon onClick={this.addSmile} />
             </IconButton>
           </Badge>
           <Badge
-            badgeContent={idea.sadfaces}
+            badgeContent={this.state.frowns || 0}
             primary={true}
             badgeStyle={{top: 12, right: 12}} >
             <IconButton tooltip="This idea sucks">
-              <MoodBadIcon />
+              <MoodBadIcon onClick={this.addFrown} />
             </IconButton>
           </Badge>
         </CardActions>
