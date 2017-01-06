@@ -3,6 +3,7 @@
 const epilogue = require('../epilogue')
 const db = require('APP/db')
 const Ideas = db.model('ideas')
+const Users = db.model('users')
 
 const customIdeasRoutes = require('express').Router()
 
@@ -14,7 +15,10 @@ module.exports = customIdeasRoutes
 // Epilogue will automatically create standard RESTful routes
 const ideas = epilogue.resource({
   model: Ideas,
-  endpoints: ['/ideas', '/ideas/:id']
+  endpoints: ['/ideas', '/ideas/:id'],
+  include: [{
+    model: Users
+  }]
 })
 
 // const {mustBeLoggedIn, selfOnly, forbidden} = epilogue.filters
