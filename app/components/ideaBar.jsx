@@ -14,6 +14,7 @@ import IconButton from 'material-ui/IconButton';
 import CheckCircleIcon from 'material-ui/svg-icons/action/check-circle';
 import MoodBadIcon from 'material-ui/svg-icons/social/mood-bad';
 import MoodIcon from 'material-ui/svg-icons/social/mood';
+import Comments from './comments';
 
 
 export default class IdeaBar extends Component {
@@ -91,6 +92,7 @@ export default class IdeaBar extends Component {
               <MoodBadIcon onClick={this.addFrown} />
             </IconButton>
           </Badge>
+          <Comments />
         </CardActions>
       </Card>
     </div> )
