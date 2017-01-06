@@ -10,9 +10,9 @@ const Reaction = db.define('reactions', {
 {
   classMethods: {
     findByIdea: function(ideaId) {
-      return Idea.findAll({
+      return Reaction.findAll({
         where: {
-         id: ideaId
+         idea_id: ideaId
         }
       })
     },
