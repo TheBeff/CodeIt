@@ -44,7 +44,7 @@ export default class Comments extends React.Component {
 
 	render(){
 
-		const comments = this.state.ideas.comments || [];
+		const comments = this.props.comments || [];
 
 		return (
 			<div>

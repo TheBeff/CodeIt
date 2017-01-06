@@ -23,9 +23,9 @@ export default class IdeaBar extends Component {
     super(props);
     this.state = {
       // make it so smiles and stuff toggle and not just add forever...
-      checks: this.props.idea.checks,
-      smiles: this.props.idea.happyfaces,
-      frowns: this.props.idea.sadfaces,
+      checks: 0,
+      smiles: 0,
+      frowns: 0,
       dogs: 5
     }
   }
@@ -43,7 +43,20 @@ export default class IdeaBar extends Component {
   addFrown = () => {
     let frowns = this.state.frowns + 1;
     this.setState({frowns: frowns})
+  }
 
+  componentDidMount() {
+    let id = this.props.idea.id || 0;
+    console.log('id', id);
+    axios.get(`/api/reactions/ideas/${id}`)
+      .then((reactions) => {
+        let smiles = reactions.great;
+        let frowns = reactions.meh;
+        let checks = reactions.star;
+        this.setState({
+          smiles: smiles, frowns: frowns, checks: checks
+        })
+      })
   }
 
   componentWillUnmount() {
@@ -58,12 +71,12 @@ export default class IdeaBar extends Component {
       <Card>
         <CardHeader
           title={idea.author}
-          subtitle="Author"
-          avatar={idea.image}
+          subtitle={idea.gitHubLink}
+          avatar={idea.imageUrl}
           actAsExpander={true}
           showExpandableButton={true}
         />
-        <CardTitle title={idea.name} />
+        <CardTitle title={idea.title} />
         <CardText expandable={true}>
           {idea.description}
         </CardText>
@@ -92,7 +105,7 @@ export default class IdeaBar extends Component {
               <MoodBadIcon onClick={this.addFrown} />
             </IconButton>
           </Badge>
-          <Comments />
+          <Comments comments={idea.comments} />
         </CardActions>
       </Card>
     </div> )

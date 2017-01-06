@@ -18,9 +18,9 @@ export default class IdeaList extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get('/masgiclroute')
+		axios.get('/api/ideas')
 		.then((ideas) => {
-			this.setState({ideas: ideas});
+			this.setState({ideas: ideas.data});
 		})
 		.catch(() => {
 			console.log('Oh no, no ideas. = (');
@@ -42,12 +42,12 @@ export default class IdeaList extends React.Component {
 			checks: 10
 		}]
 
-		const ideas = this.state.ideas || idea;
+		const ideas = this.state.ideas || idea
 
 		return (
 			<div>
-				{ideas.map((idea) => {
-					<IdeaBar idea={idea} />
+				{ideas.map((idea, index) => {
+					return (<IdeaBar idea={idea} key={index} />)
 				})}
 			</div>
 		)
